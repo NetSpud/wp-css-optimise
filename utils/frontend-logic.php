@@ -26,7 +26,7 @@ function handle_page_load()
 
         global $wp_styles;
 
-        //remove all other stylesheets except those in $permitted_stylesheets, and the sbp-performance stylesheet which is the minified and stripped version of the
+        //remove all other stylesheets except those in $permitted_stylesheets, and the sbp-performance stylesheet which is the minified and stripped version of the whole page
         if (is_object($wp_styles) && property_exists($wp_styles, 'queue')) {
             foreach ($wp_styles->queue as $handle) {
                 if (!in_array($handle, $permitted_stylesheets)) {

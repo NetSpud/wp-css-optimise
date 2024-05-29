@@ -5,9 +5,9 @@ function wporg_add_custom_box()
     $screens = ['post', 'page'];
     foreach ($screens as $screen) {
         add_meta_box(
-            'css_optimise',                 // Unique ID
-            'CSS Optimisation',      // Box title
-            'css_optimisation_box',  // Content callback, must be of type callable
+            'css_optimise',
+            'CSS Optimisation',
+            'css_optimisation_box',
             $screen,
             "side",
             "high"
@@ -46,9 +46,9 @@ function wporg_save_postdata($post_id)
 {
 
     global $post;
-    //generate stylesheet when performance mode is enabled, or if the mode has been changed to performance from default
-    //only apply to certain page types with guard clause
 
+    //generate stylesheet when performance mode is enabled for the first time, otherwise switch back to previously generate stylesheet
+    //only trigger save on certain page types
     if (!in_array($post->post_type, ['page', 'post'])) return;
 
 
