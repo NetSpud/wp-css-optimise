@@ -1,7 +1,7 @@
 <?php
 function handle_page_load()
 {
-    $allowed_styles = get_option("permitted_stylesheets", ""); //allow certain stylesheets that are garunteed to be needed on all pages, such as the admin bar and the ubermenu font stylesheet;
+    $allowed_styles = get_option("permitted_stylesheets", ""); //allow certain stylesheets
 
     //split by "," and remove any whitespace
     $permitted_stylesheets = array_map('trim', explode(",", $allowed_styles));
