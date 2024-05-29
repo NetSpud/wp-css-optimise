@@ -11,7 +11,7 @@ This plugin is designed to optimise the CSS of a WordPress site. It does this by
 
 ## Why
 
-You have to pay for plugins such as WP Rocket, and don't neccessarily need all the other features. This plugin is designed to be a more lightweight, free alternative. It might not be as convienient, but it will do the job.
+You have to pay for plugins such as WP Rocket, and don't necessarily need all the other features. This plugin is designed to be a more lightweight, free alternative. It might not be as convienient, but it will do the job.
 
 ## How
 
@@ -27,7 +27,7 @@ The WordPress plugin is the main part of the plugin. It is responsible for confi
 - Which stylesheets to block
 - Which stylesheets to allow
 - API Endpoint URL
-  It also handles which pages are optimised, as well as the metabox added to the post editor.
+- It also handles which pages are optimised, as well as the metabox added to the post editor which displays the selected configuration and its respective optimised CSS file.
 
 ### The API
 
@@ -54,3 +54,7 @@ npm start
 ```
 
 Which will start the server, ready for requests.
+
+## Negatives
+
+Although I'd love to make this plugin work in every scenario, there are some limitations. Each time a page is optimised, it generates a new CSS file. This means that if you have a lot of pages you decide to optimise, you will have a lot of CSS files, which could eat away in your disk space. In the future, it'd be good to implement some form of file hashing to identify if a file is already in use, and if so, use that file instead of generating a new one.
