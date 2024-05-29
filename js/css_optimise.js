@@ -1,4 +1,4 @@
-console.log("sbp_css_optimise.js loaded")
+console.log("css_optimise.js loaded")
 
 const main = () => {
     const generateStyleSheetButton = document.getElementById('css_optimise_generate_stylesheet');
