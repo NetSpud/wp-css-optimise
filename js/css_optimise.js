@@ -26,7 +26,7 @@ function generateStyleSheet(spinner) {
         post_ID: post_ID.value,
     };
 
-    const cb = (response) => {
+    const handleReq = (response) => {
         console.log(response)
         spinner.style.visibility = "hidden";
         if (!response) return;
@@ -43,10 +43,15 @@ function generateStyleSheet(spinner) {
         },
         body: new URLSearchParams(options).toString()
     })
-        .then(response => response.json())
-        .then(cb)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(handleReq)
         .catch((error) => {
-            console.log(error)
+            console.log(error);
         });
 
 

@@ -13,6 +13,29 @@ function download_file_curl($url, $destination)
 }
 
 
+function add_ending_slash($url)
+{
+    // Use parse_url to get the path component
+    $parsedUrl = parse_url($url);
+    $path = $parsedUrl['path'] ?? '';
+
+    // Check if the path ends with a slash
+    if (substr($path, -1) !== '/') {
+        // Add a slash if missing
+        $path .= '/';
+    }
+
+    // Rebuild the URL with the modified path
+    $url = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $path;
+
+    // Add query string if it existed in the original URL
+    if (isset($parsedUrl['query'])) {
+        $url .= '?' . $parsedUrl['query'];
+    }
+
+    return $url;
+}
+
 function updateOptimisedFileLocation($path, $post_id)
 {
     update_post_meta(
@@ -68,18 +91,26 @@ function optimise_CSS($URL, $post_id)
     }
 
     /*
-- response body: {css: "domain.com/filename.css"}
-- Using this, we need to download the file, and write it to the plugin DIR/optimised_css/ folder
-*/
+    - response body: {css: "domain.com/filename.css"}
+    - Using this, we need to download the file, and write it to the plugin folder DIR/optimised_css/ folder
+    */
 
 
 
 
     $decoded = json_decode($response);
     $api_URL = get_option("endpoint_url", "");
-    $fullURL = $api_URL . $decoded->css;
+    $fullURL = add_ending_slash($api_URL) . $decoded->css;
     $filename = basename($fullURL);
     $optmised_css_full_path = plugin_dir_path(__FILE__) . "../optimised_css/" . $filename;
+
+
+    error_log("full URL: " . $fullURL);
+    error_log("full URL: " . $fullURL);
+    error_log("full URL: " . $fullURL);
+    error_log("full URL: " . $fullURL);
+    error_log("full URL: " . $fullURL);
+
 
     //make GET request to endpoint to download file from $fullURL
     //write result of that to file at path from $optmised_css_full_path
