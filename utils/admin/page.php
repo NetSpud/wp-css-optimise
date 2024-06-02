@@ -36,6 +36,7 @@ function css_optimisation_box($post)
                 <span id="css_optimise_spinner" class="spinner"></span>
                 <button class="button-primary" id="css_optimise_generate_stylesheet">Regenerate Stylesheet</button>
             </div>
+            <span style="color: red;" id="css_optimise_errors"></span>
     </div>
 <? endif; ?>
 <?php

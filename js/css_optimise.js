@@ -15,6 +15,7 @@ function generateStyleSheet(spinner) {
     //get URl to be optimised
     const css_optimise_page_slug = document.getElementById('css_optimise_page_slug');
     const url = css_optimise_page_slug.getAttribute('data-url');
+    const errorsEl = document.getElementById('css_optimise_errors');
 
     if (!url) return;
 
@@ -29,6 +30,9 @@ function generateStyleSheet(spinner) {
         console.log(response)
         spinner.style.visibility = "hidden";
         if (!response) return;
+        if (response.err) {
+            return errorsEl.innerText = response.err;
+        }
         css_optimise_current_performance_file.innerText = response;
     }
 

@@ -76,7 +76,6 @@ function endpoint_url_cb($args)
 }
 function excluded_urls_cb($args)
 {
-    // Get the value of the setting we've registered with register_setting()
     $val = get_option('excluded_urls');
 ?>
     <input style="width: 22rem;" type="text" name="<?php echo esc_attr($args['label_for']); ?>" placeholder="excluded URLS" value="<?php echo $val; ?>" />
@@ -84,7 +83,6 @@ function excluded_urls_cb($args)
 }
 function permitted_loadable_urls_cb($args)
 {
-    // Get the value of the setting we've registered with register_setting()
     $val = get_option('permitted_stylesheets');
 ?>
     <input style="width: 22rem;" type="text" name="<?php echo esc_attr($args['label_for']); ?>" placeholder="Permitted stylesheets" value="<?php echo $val; ?>" />

@@ -35,7 +35,12 @@ function optimise_CSS($URL, $post_id)
 
     //run the optimisation service, get file resonse, then download it and save it to the plugin directory
     $curl = curl_init();
-    $endpoint_url = get_option('endpoint_url');
+    $endpoint_url = get_option('endpoint_url', "");
+
+    if (!$endpoint_url) {
+        return wp_send_json(["err" => "No endpoint URL set. Please set one in the plugin settings page and try again."]);
+    }
+
     curl_setopt_array($curl, [
         CURLOPT_PORT => "3000",
         CURLOPT_URL => $endpoint_url,
@@ -71,7 +76,7 @@ function optimise_CSS($URL, $post_id)
 
 
     $decoded = json_decode($response);
-    $api_URL = get_option("endpoint_url");
+    $api_URL = get_option("endpoint_url", "");
     $fullURL = $api_URL . $decoded->css;
     $filename = basename($fullURL);
     $optmised_css_full_path = plugin_dir_path(__FILE__) . "../optimised_css/" . $filename;
