@@ -1,4 +1,5 @@
 <?php
+
 function download_file_curl($url, $destination)
 {
     $file = fopen($destination, "w+");
@@ -13,28 +14,26 @@ function download_file_curl($url, $destination)
 }
 
 
-function add_ending_slash($url)
+function getRootDomainWithPort($urlString)
 {
-    // Use parse_url to get the path component
-    $parsedUrl = parse_url($url);
-    $path = $parsedUrl['path'] ?? '';
+    // Parse the URL string
+    $parsed_url = parse_url($urlString);
 
-    // Check if the path ends with a slash
-    if (substr($path, -1) !== '/') {
-        // Add a slash if missing
-        $path .= '/';
+    // Check if parsing was successful
+    if (!$parsed_url) {
+        return null;  // Return null for invalid URLs
     }
 
-    // Rebuild the URL with the modified path
-    $url = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $path;
+    // Extract host and port
+    $host = $parsed_url['host'];
+    $port = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
 
-    // Add query string if it existed in the original URL
-    if (isset($parsedUrl['query'])) {
-        $url .= '?' . $parsedUrl['query'];
-    }
+    // Rebuild the URL with potential port
+    $root_domain = $host . $port;
 
-    return $url;
+    return $root_domain;
 }
+
 
 function updateOptimisedFileLocation($path, $post_id)
 {
@@ -51,7 +50,7 @@ function optimise_CSS($URL, $post_id)
     $existing_file = get_post_meta($post_id, 'css_optimise_file', true);
     if ($existing_file !== "" || !empty($existing_file)) {
         error_log("deleting old CSS file of path:" . $existing_file);
-        unlink($existing_file);
+        unlink(plugin_dir_path(__FILE__) . "../optimised_css/" . $existing_file);
     }
 
     $excluded_files = get_option('excluded_urls', "");
@@ -65,10 +64,8 @@ function optimise_CSS($URL, $post_id)
     }
 
     curl_setopt_array($curl, [
-        CURLOPT_PORT => "3000",
         CURLOPT_URL => $endpoint_url,
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
@@ -99,23 +96,18 @@ function optimise_CSS($URL, $post_id)
 
 
     $decoded = json_decode($response);
-    $api_URL = get_option("endpoint_url", "");
-    $fullURL = add_ending_slash($api_URL) . $decoded->css;
-    $filename = basename($fullURL);
+    $endpoint_url = get_option('endpoint_url', "");
+    $root_domain = getRootDomainWithPort($endpoint_url);
+
+    $fullURL = $root_domain . "/" . $decoded->css;
+    $filename = $decoded->css;
+
     $optmised_css_full_path = plugin_dir_path(__FILE__) . "../optimised_css/" . $filename;
-
-
-    error_log("full URL: " . $fullURL);
-    error_log("full URL: " . $fullURL);
-    error_log("full URL: " . $fullURL);
-    error_log("full URL: " . $fullURL);
-    error_log("full URL: " . $fullURL);
-
 
     //make GET request to endpoint to download file from $fullURL
     //write result of that to file at path from $optmised_css_full_path
 
-    download_file_curl($fullURL, $optmised_css_full_path, $filename);
+    download_file_curl($fullURL, $optmised_css_full_path);
     updateOptimisedFileLocation($filename, $post_id);
 
 
