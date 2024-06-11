@@ -54,7 +54,6 @@ function css_optimisation_box($post)
             <a href="<?php echo $settings_url ?>" class="button button-primary">Go to settings</a>
         </div>
     <?php endif; ?>
-    </div>
 <?php
 }
 
