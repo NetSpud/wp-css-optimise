@@ -13,6 +13,9 @@ function handle_page_load()
     if (is_admin()) {
         return; // Return if the request is for an administrative interface page
     }
+    if (wp_get_current_user()) {
+        return; // Return if the user is logged in
+    }
 
     if (!$value) return;
 
