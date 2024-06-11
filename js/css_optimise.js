@@ -2,6 +2,7 @@ console.log("css_optimise.js loaded")
 
 const main = () => {
     const generateStyleSheetButton = document.getElementById('css_optimise_generate_stylesheet');
+    if (!generateStyleSheetButton) return;
     generateStyleSheetButton.addEventListener('click', (e) => {
         e.preventDefault();
         console.log("generateStyleSheetButton clicked")
@@ -9,7 +10,6 @@ const main = () => {
         css_optimise_spinner.style.visibility = "visible";
         generateStyleSheet(css_optimise_spinner);
     });
-
 }
 function generateStyleSheet(spinner) {
     //get URl to be optimised
