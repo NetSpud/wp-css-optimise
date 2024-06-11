@@ -93,8 +93,6 @@ function optimise_CSS($URL, $post_id)
     */
 
 
-
-
     $decoded = json_decode($response);
     $endpoint_url = get_option('endpoint_url', "");
     $root_domain = getRootDomainWithPort($endpoint_url);
