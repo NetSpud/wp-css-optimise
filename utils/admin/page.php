@@ -25,16 +25,16 @@ function css_optimisation_box($post)
     $settings_url = get_admin_url(get_current_user_id(), 'options-general.php?page=css_optimise');
 ?>
     <div>
-        <? if (!$settingsConfigured) : ?> <div style="opacity: 25%; position:relative;"> <? endif; ?>
+        <?php if (!$settingsConfigured) : ?> <div style="opacity: 25%; position:relative;"> <?php endif; ?>
             <label for="css_optimise">OPTIMISATION MODE</label>
 
-            <div id="css_optimise_page_slug" data-url="<? echo get_page_link() ?>">
-                <select name="css_optimise" id="css_optimise" class="postbox" <? if (!$settingsConfigured) : ?> disabled="false" <? endif ?>>
+            <div id="css_optimise_page_slug" data-url="<?php echo get_page_link() ?>">
+                <select name="css_optimise" id="css_optimise" class="postbox" <?php if (!$settingsConfigured) : ?> disabled="false" <?php endif ?>>
                     <option value="">Select something...</option>
                     <option value="performance" <?php selected($optimisation_mode, 'performance'); ?>>Perfomance Mode</option>
                     <option value="default" <?php selected($optimisation_mode, 'default'); ?>>Default Mode</option>
                 </select>
-                <? if ($optimisation_mode === "performance") : ?>
+                <?php if ($optimisation_mode === "performance") : ?>
                     <small style="display: block; margin-bottom: 1rem;">Current optimised file: <br />
                         <span id="css_optimise_current_performance_file"><?php echo basename($file); ?></span>
                     </small>
@@ -43,17 +43,17 @@ function css_optimisation_box($post)
                         <button class="button-primary" id="css_optimise_generate_stylesheet">Regenerate Stylesheet</button>
                     </div>
                     <span style="color: red;" id="css_optimise_errors"></span>
-                <? endif; ?>
+                <?php endif; ?>
             </div>
-            <? if (!$settingsConfigured) : ?>
-            </div> <? endif; ?>
+            <?php if (!$settingsConfigured) : ?>
+            </div> <?php endif; ?>
     </div>
-    <? if (!$settingsConfigured) : ?>
+    <?php if (!$settingsConfigured) : ?>
         <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
             <span>Configuration Required</span>
-            <a href="<? echo $settings_url ?>" class="button button-primary">Go to settings</a>
+            <a href="<?php echo $settings_url ?>" class="button button-primary">Go to settings</a>
         </div>
-    <? endif; ?>
+    <?php endif; ?>
     </div>
 <?php
 }
