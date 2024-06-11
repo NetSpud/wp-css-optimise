@@ -1,6 +1,7 @@
 <?php
 
 function wporg_add_custom_box()
+
 {
     $screens = ['post', 'page'];
     foreach ($screens as $screen) {
@@ -20,9 +21,8 @@ function css_optimisation_box($post)
 {
     $optimisation_mode = get_post_meta($post->ID, 'css_optimise_key', true);
     $file = get_post_meta($post->ID, 'css_optimise_file', true);
-    $settingsConfigured = get_option('endpoint_url', "") ? true : false;
+    $settingsConfigured = get_option('endpoint_url', "") !== "";
     $settings_url = get_admin_url(get_current_user_id(), 'options-general.php?page=css_optimise');
-
 ?>
     <div>
         <? if (!$settingsConfigured) : ?> <div style="opacity: 25%; position:relative;"> <? endif; ?>
@@ -43,15 +43,17 @@ function css_optimisation_box($post)
                         <button class="button-primary" id="css_optimise_generate_stylesheet">Regenerate Stylesheet</button>
                     </div>
                     <span style="color: red;" id="css_optimise_errors"></span>
+                <? endif; ?>
             </div>
-        <? endif; ?>
-        <? if (!$settingsConfigured) : ?>
+            <? if (!$settingsConfigured) : ?>
             </div> <? endif; ?>
     </div>
-    <? if (!$settingsConfigured) : ?> <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+    <? if (!$settingsConfigured) : ?>
+        <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
             <span>Configuration Required</span>
             <a href="<? echo $settings_url ?>" class="button button-primary">Go to settings</a>
-        </div> <? endif ?>
+        </div>
+    <? endif; ?>
     </div>
 <?php
 }

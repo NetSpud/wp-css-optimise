@@ -10,6 +10,8 @@ require_once('utils/admin/page.php');
 require_once('utils/admin/settings.php');
 require_once('utils/frontend-logic.php');
 
+
+
 add_action('add_meta_boxes', 'wporg_add_custom_box');
 add_action('save_post', 'wporg_save_postdata');
 add_action('wp_print_styles', 'handle_page_load');
@@ -34,4 +36,3 @@ require_once('utils/generate-stylesheet.php');
 add_action('admin_enqueue_scripts', 'enqueue_client_side_script');
 
 add_action('wp_ajax_wporg_ajax_change', 'css_optimise_generate_stylesheet_callback');
-// add_action('admin_enqueue_scripts', 'enqueue_settings_JS');
