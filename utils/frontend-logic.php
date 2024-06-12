@@ -22,7 +22,7 @@ function handle_page_load($id)
     $page_types = ["post", "page"];
     $post_type = get_post_type($id);
 
-    // if (!in_array($post_type, $page_types)) return; //if not in page type, return
+    if (!in_array($post_type, $page_types)) return; //if not in page type, return
 
     //if not in page type, return
 
