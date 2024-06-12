@@ -1,5 +1,5 @@
 <?php
-function handle_page_load()
+function handle_page_load($page)
 {
     $allowed_styles = get_option("permitted_stylesheets", ""); //allow certain stylesheets
 
@@ -18,6 +18,13 @@ function handle_page_load()
     }
 
     if (!$value) return;
+
+    $page_types = ["post", "page"];
+    if (!in_array($page, $page_types)) return;
+
+
+    //if not in page type, return
+
 
     //check for the performance mode query string, if it is false, return, othrwise, continue
     if (isset($_GET['performance_mode'])) {

@@ -17,17 +17,6 @@ add_action('save_post', 'wporg_save_postdata');
 add_action('wp_print_styles', 'handle_page_load');
 
 
-function remove_unwanted_styling()
-{
-
-    if (!is_admin()) {
-        wp_dequeue_style('js_composer_front');
-        wp_deregister_style('js_composer_front');
-    }
-}
-
-add_action('wp_print_styles', 'remove_unwanted_styling', 99);
-
 
 
 
