@@ -1,5 +1,5 @@
 <?php
-function handle_page_load($page)
+function handle_page_load($id)
 {
     $allowed_styles = get_option("permitted_stylesheets", ""); //allow certain stylesheets
 
@@ -20,8 +20,9 @@ function handle_page_load($page)
     if (!$value) return;
 
     $page_types = ["post", "page"];
-    if (!in_array($page, $page_types)) return;
+    $post_type = get_post_type($id);
 
+    // if (!in_array($post_type, $page_types)) return; //if not in page type, return
 
     //if not in page type, return
 
@@ -45,6 +46,9 @@ function handle_page_load($page)
             }
         }
 
+        wp_dequeue_style('js_composer_front');
+        wp_deregister_style('js_composer_front');
+        //remove wp_bakery styling because it won't play nice with dequeueing like the rest of it
 
         wp_enqueue_style('sbp-performance',  plugin_dir_url(__DIR__) . "optimised_css/" . $stylesheetName);
     }
