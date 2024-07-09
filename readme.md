@@ -37,24 +37,14 @@ The API is a self-hostable API that is responsible for the actual optimisation o
 
 ### Plugin
 
-Install plugin from wordpress.org, or by downloading the latest release from the releases page and uploading it to your site.
+Download the latest release from the releases page and upload it to your site.
 
 ### API
 
-run
+Please visit the API repo at: https://github.com/NetSpud/css-optimiser-api
 
-```bash
-npm install wp-css-optimise-api (to be published)
-```
 
-then run
 
-```bash
-npm start
-```
+## Negatives/Drawbacks
 
-Which will start the server, ready for requests.
-
-## Negatives
-
-Although I'd love to make this plugin work in every scenario, there are some limitations. Each time a page is optimised, it generates a new CSS file. This means that if you have a lot of pages you decide to optimise, you will have a lot of CSS files, which could eat away in your disk space. In the future, it'd be good to implement some form of file hashing to identify if a file is already in use, and if so, use that file instead of generating a new one.
+Although I'd love to make this plugin work in every scenario, there are some limitations. Each time a page is optimised, it generates a new CSS file. This means that if you have a lot of pages you decide to optimise, you will have a lot of CSS files, which could eat away at your disk space. In the future, it'd be good to implement some form of hashing so that if a page uses the same styles, it loads the same file instead of generating a new one.
