@@ -18,7 +18,7 @@ You have to pay for plugins such as WP Rocket, and don't necessarily need all th
 The plugin is broken into two parts:
 
 1. The wordpress plugin (this repo)
-2. The self-hostable API
+2. [The self-hostable API](https://github.com/NetSpud/css-optimiser-api)
 
 ### The WordPress Plugin
 
