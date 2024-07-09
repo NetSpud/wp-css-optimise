@@ -48,7 +48,7 @@ Please visit the API repo at: https://github.com/NetSpud/css-optimiser-api and f
 
 The settings page has three options, and can be accessed from "Settings > CSS Optmisation".
 
-* API Endpoint - this must be set, and allows the plugin to communicate with the API
+* API Endpoint - this must be set, and allows the plugin to communicate with the API (If it's running on the same server, you can use localhost)
 * Excluded URLs - if there are any stylesheets that you do not wish to be optimised, enter their path or filename here.
 * Permitted, loadable stylesheets - by default, when the "optimised" mode is enabled, it blocks the loading of any other stylesheets on the page, in an effort to increase the page performance. However, if you have a stylesheet that loads of every page, you can allow it to be loaded here. This is especially useful when used in combination with the "Excluded URLs", as you can specify which files can still be loaded and excluded them from your optimised stylesheet.
 
