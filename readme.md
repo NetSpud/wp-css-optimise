@@ -41,9 +41,31 @@ Download the latest release from the releases page and upload it to your site.
 
 ### API
 
-Please visit the API repo at: https://github.com/NetSpud/css-optimiser-api
+Please visit the API repo at: https://github.com/NetSpud/css-optimiser-api and follow the steps there.
 
+## Configuration
+<a href="https://ibb.co/d0VKDn6"><img src="https://i.ibb.co/Lzcp146/wp-2.png" alt="wp-2" border="0"></a>
 
+The settings page has three options, and can be accessed from "Settings > CSS Optmisation".
+
+* API Endpoint - this must be set, and allows the plugin to communicate with the API
+* Excluded URLs - if there are any stylesheets that you do not wish to be optimised, enter their path or filename here.
+* Permitted, loadable stylesheets - by default, when the "optimised" mode is enabled, it blocks the loading of any other stylesheets on the page, in an effort to increase the page performance. However, if you have a stylesheet that loads of every page, you can allow it to be loaded here. This is especially useful when used in combination with the "Excluded URLs", as you can specify which files can still be loaded and excluded them from your optimised stylesheet.
+
+## Usage
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/2dPV0d6/wp-1.png" alt="wp-1" border="0"></a>
+
+All posts and pages will now have a box at the top right, with options to specific if each page should be configured. There are two modes:
+* Default - does nothing, useful for pages that do not require optimising
+* Performance Mode - optimises pages
+
+To use, hit the generate stylesheet button. For new pages or posts that have not been optimised, this will run on the first update of the page.
+Every time you need to regenerate the stylesheet, you just click that button.
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/NyQ3tCT/wp-3.png" alt="wp-3" border="0"></a>
+
+(Notice the missing button, it will appear once the page/post has been updated)
 
 ## Negatives/Drawbacks
 
