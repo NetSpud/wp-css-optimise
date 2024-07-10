@@ -46,8 +46,8 @@ function handle_page_load($id)
             }
         }
 
-        wp_dequeue_style('js_composer_front');
-        wp_deregister_style('js_composer_front');
+        // wp_dequeue_style('js_composer_front');
+        // wp_deregister_style('js_composer_front');
         //remove wp_bakery styling because it won't play nice with dequeueing like the rest of it
 
         wp_enqueue_style('sbp-performance',  plugin_dir_url(__DIR__) . "optimised_css/" . $stylesheetName);
