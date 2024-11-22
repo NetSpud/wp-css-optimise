@@ -14,6 +14,7 @@ function css_optimise_settings_init()
     register_setting('css_optimise', 'endpoint_url');
     register_setting('css_optimise', 'excluded_urls');
     register_setting('css_optimise', 'permitted_stylesheets');
+    register_setting('css_optimise', 'api_token'); // Register new setting for api_token
 
     // Register a new section in the "css_optimise" page.
     add_settings_section(
@@ -57,14 +58,23 @@ function css_optimise_settings_init()
             'label_for'         => 'permitted_stylesheets',
         )
     );
+    add_settings_field(
+        'api_token', // As of WP 4.6 this value is used only internally.
+        // Use $args' label_for to populate the id inside the callback.
+        __('API Token', 'css_optimise'),
+        'api_token_cb',
+        'css_optimise',
+        'id_css_optimise',
+        array(
+            'label_for'         => 'api_token',
+        )
+    );
 }
 
 /**
  * Register our css_optimise_settings_init to the admin_init action hook.
  */
 add_action('admin_init', 'css_optimise_settings_init');
-
-
 
 function endpoint_url_cb($args)
 {
@@ -88,8 +98,13 @@ function permitted_loadable_urls_cb($args)
     <input style="width: 22rem;" type="text" name="<?php echo esc_attr($args['label_for']); ?>" placeholder="Permitted stylesheets" value="<?php echo $val; ?>" />
 <?php
 }
-
-
+function api_token_cb($args)
+{
+    $val = get_option('api_token');
+?>
+    <input style="width: 22rem;" type="text" name="<?php echo esc_attr($args['label_for']); ?>" placeholder="API Token" value="<?php echo $val; ?>" />
+<?php
+}
 
 function css_optimise_options_page()
 {
@@ -103,11 +118,7 @@ function css_optimise_options_page()
     );
 }
 
-
-
 add_action('admin_menu', 'css_optimise_options_page');
-
-
 
 function css_optimise_options_page_html()
 {
@@ -144,7 +155,6 @@ function css_optimise_options_page_html()
     </div>
 <?php
 }
-
 
 //add js file for settings config
 
