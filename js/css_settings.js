@@ -1,13 +1,9 @@
 console.log("css_settings.js | loaded")
 
-
-
 function main() {
     const form = document.getElementById("settings-form");
     form.addEventListener("submit", e => handleFormSubmit(e))
-
 }
-
 
 function createErrorBox(message) {
     const div = document.createElement("div");
@@ -37,10 +33,17 @@ function handleFormSubmit(e) {
     const excluded_urlsInput = document.querySelector("input[name='excluded_urls']");
     const permitted_stylesheetsInput = document.querySelector("input[name='permitted_stylesheets']");
     const api_endpointInput = document.querySelector("input[name='endpoint_url']");
+    const api_tokenInput = document.querySelector("input[name='api_token']");
 
     if (!api_endpointInput.value) {
         e.preventDefault();
         const errorBox = createErrorBox("Please enter an API endpoint URL");
+        document.querySelector(".wrap").prepend(errorBox);
+    }
+
+    if (!api_tokenInput.value) {
+        e.preventDefault();
+        const errorBox = createErrorBox("Please enter an API token");
         document.querySelector(".wrap").prepend(errorBox);
     }
 
@@ -58,6 +61,5 @@ function handleFormSubmit(e) {
         e,
     );
 }
-
 
 window.onload = main; //run script after window loaded
