@@ -141,6 +141,8 @@ function optimise_CSS($URL, $post_id)
         insert_record(basename($filename), $hash);
         return basename($optmised_css_full_path);
     } else {
+        error_log("Existing hash is " . $existing_hash);
+        error_log("New hash is " . $hash);
         if ($existing_hash !== $hash) {
             //update count of usage
             $result = get_record($hash);
@@ -148,6 +150,7 @@ function optimise_CSS($URL, $post_id)
             if (!empty($result)) {
                 update_record($result->usage_qty + 1, $result->hash);
                 update_file_location_for_page($result->filename, $post_id);
+                update_file_hash_for_page($hash, $post_id);
                 return $result->filename;
             }
         }
