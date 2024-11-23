@@ -14,7 +14,7 @@ function download_file_curl($url, $destination)
 }
 
 
-function getRootDomainWithPort($urlString)
+function get_domain_with_port($urlString)
 {
     // Parse the URL string
     $parsed_url = parse_url($urlString);
@@ -35,7 +35,7 @@ function getRootDomainWithPort($urlString)
 }
 
 
-function updateOptimisedFileLocation($path, $post_id)
+function update_file_location_for_page($path, $post_id)
 {
     update_post_meta(
         $post_id,
@@ -45,13 +45,21 @@ function updateOptimisedFileLocation($path, $post_id)
 }
 
 
+function update_file_hash_for_page($hash, $post_id)
+{
+    update_post_meta(
+        $post_id,
+        'css_optimise_hash',
+        $hash
+    );
+}
+
+
 function optimise_CSS($URL, $post_id)
 {
     $existing_file = get_post_meta($post_id, 'css_optimise_file', true);
-    if ($existing_file !== "" || !empty($existing_file)) {
-        error_log("deleting old CSS file of path:" . $existing_file);
-        unlink(plugin_dir_path(__FILE__) . "../optimised_css/" . $existing_file);
-    }
+    $existing_hash = get_post_meta($post_id, 'css_optimise_hash', true);
+
 
     $excluded_files = get_option('excluded_urls', "");
 
@@ -72,6 +80,7 @@ function optimise_CSS($URL, $post_id)
         CURLOPT_POSTFIELDS => json_encode([
             'url' => $URL,
             "excludedFiles" => $excluded_files,
+            "api_token" => get_option('api_token', ""),
         ]),
         CURLOPT_HTTPHEADER => [
             "content-type: application/json"
@@ -88,30 +97,65 @@ function optimise_CSS($URL, $post_id)
     }
 
     /*
-    - response body: {css: "domain.com/filename.css"}
+    - response body: {css: "domain.com/filename.css", hash: sha256hash}
     - Using this, we need to download the file, and write it to the plugin folder DIR/optimised_css/ folder
     */
 
 
     $decoded = json_decode($response);
     $endpoint_url = get_option('endpoint_url', "");
-    $root_domain = getRootDomainWithPort($endpoint_url);
+    $root_domain = get_domain_with_port($endpoint_url);
 
     $fullURL = $root_domain . "/" . $decoded->css;
     $filename = $decoded->css;
+    $hash = $decoded->hash;
 
     $optmised_css_full_path = plugin_dir_path(__FILE__) . "../optimised_css/" . $filename;
 
-    //make GET request to endpoint to download file from $fullURL
-    //write result of that to file at path from $optmised_css_full_path
+    /*
 
-    download_file_curl($fullURL, $optmised_css_full_path);
-    updateOptimisedFileLocation($filename, $post_id);
+    - If the hash stays the same when we next attempt to optimise, we should not increase the usage count.
+    - If the hash changes, we should increase the usage count for the applicable hash, if it's available.
+    - We should also decrement the counter if the hash is different.
+    - If the usage count is 1, and we're about to change from using it, then we can get rid of it, and its record as they are no longer needed.
+    */
+
+    if ($existing_hash !== $hash) {
+        $result = get_record($existing_hash);
+        if (!empty($result)) {
+            if ($existing_hash !== "") {
+                if ($result->usage_qty <= 1) {
+                    unlink(plugin_dir_path(__FILE__) . "../optimised_css/" . $result->filename);
+                    //delete record
+                    delete_record($existing_hash);
+                }
+            }
+            update_record($result->usage_qty - 1, $existing_hash); //decrement
+        }
+    }
 
 
+    $hash_exists = does_hash_exist($hash); //check if the styles are already produced using an existing file
+    if (!$hash_exists) {
+        download_file_curl($fullURL, $optmised_css_full_path);
+        insert_record(basename($filename), $hash);
+        return basename($optmised_css_full_path);
+    } else {
+        if ($existing_hash !== $hash) {
+            //update count of usage
+            $result = get_record($hash);
+            error_log("result: " . json_encode($result));
+            if (!empty($result)) {
+                update_record($result->usage_qty + 1, $result->hash);
+                update_file_location_for_page($result->filename, $post_id);
+                return $result->filename;
+            }
+        }
+    }
 
-    return basename($optmised_css_full_path);
+    update_file_hash_for_page($hash, $post_id);
 }
+
 
 
 function css_optimise_generate_stylesheet_callback()
