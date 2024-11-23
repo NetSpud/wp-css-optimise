@@ -1,4 +1,6 @@
 <?php
+
+
 function handle_page_load($id)
 {
     $allowed_styles = get_option("permitted_stylesheets", ""); //allow certain stylesheets
@@ -37,11 +39,22 @@ function handle_page_load($id)
 
         global $wp_styles;
 
-        //remove all other stylesheets except those in $permitted_stylesheets, and the sbp-performance stylesheet which is the minified and stripped version of the whole page
+
+        // Remove all other stylesheets except those in $permitted_stylesheets
         if (is_object($wp_styles) && property_exists($wp_styles, 'queue')) {
             foreach ($wp_styles->queue as $handle) {
-                if (!in_array($handle, $permitted_stylesheets)) {
-                    wp_dequeue_style($handle);
+                // Get the registered style object
+                $style = $wp_styles->registered[$handle] ?? null;
+
+                // Check if the style has a `src` and is not inline
+                if ($style && !empty($style->src)) {
+                    if (!in_array($handle, $permitted_stylesheets)) {
+                        wp_dequeue_style($handle);
+                        error_log("Dequeued: " . $handle);
+                    }
+                } else {
+                    // Inline styles (no `src`) are retained
+                    error_log("Retained inline style: " . $handle);
                 }
             }
         }
