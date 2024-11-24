@@ -106,6 +106,9 @@ function optimise_CSS($URL, $post_id)
     $endpoint_url = get_option('endpoint_url', "");
     $root_domain = get_domain_with_port($endpoint_url);
 
+    if (!$decoded) {
+        return wp_send_json(["err" => "An error occurred. Please try again."]);
+    }
     $fullURL = $root_domain . "/" . $decoded->css;
     $filename = $decoded->css;
     $hash = $decoded->hash;

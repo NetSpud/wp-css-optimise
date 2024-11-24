@@ -1,6 +1,6 @@
 <?php
 
-function wporg_add_custom_box()
+function legacy()
 
 {
     $screens = ['post', 'page'];
@@ -11,7 +11,7 @@ function wporg_add_custom_box()
             'css_optimisation_box',
             $screen,
             "side",
-            "high"
+            "high",
         );
     }
 }
@@ -65,6 +65,7 @@ function wporg_save_postdata($post_id)
 
     //generate stylesheet when performance mode is enabled for the first time, otherwise switch back to previously generate stylesheet
     //only trigger save on certain page types
+    if (!$post) return;
     if (!in_array($post->post_type, ['page', 'post'])) return;
 
 
@@ -96,7 +97,13 @@ function enqueue_client_side_script($hook)
 {
     global $post;
     //if not a post or page, return
+    if (!$post) return;
     if (!in_array($post->post_type, ['page', 'post'])) return;
     if ('post.php' != $hook && 'post-new.php' != $hook) return;
-    wp_enqueue_script('wporg_meta_box_script', plugin_dir_url(__FILE__) . '../../js/css_optimise.js', ['jquery']);
+    wp_enqueue_script('wporg_meta_box_script', plugin_dir_url(__FILE__) . '../../../js/css_optimise.js', ['jquery']);
 }
+
+
+add_action('save_post', 'wporg_save_postdata');
+add_action('admin_enqueue_scripts', 'enqueue_client_side_script');
+add_action('add_meta_boxes', 'legacy');
