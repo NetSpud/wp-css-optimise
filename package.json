@@ -1,0 +1,17 @@
+{
+  "name": "css-optimiser",
+  "version": "1.0.0",
+  "description": "This plugin is designed to optimise the CSS of a WordPress site. It does this by:",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^30.5.1"
+  },
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+}
