@@ -10,7 +10,7 @@ add_action('current_screen', function ($current_screen) {
         require_once('ui/latest.php');
     } else {
         // Do something specific for the Classic Editor.
-        require_once('ui/legacy.php');
+        require_once('ui/classic_editor.php');
         error_log('Classic Editor is being used.');
     }
 });
