@@ -12,11 +12,7 @@ require_once('utils/admin/database.php');
 add_action('wp_print_styles', 'handle_page_load');
 
 
-
-
-
 register_activation_hook(__FILE__, 'add_db_table');
-
 
 
 
@@ -24,5 +20,5 @@ register_activation_hook(__FILE__, 'add_db_table');
 require_once('utils/generate-stylesheet.php');
 
 
-add_action('wp_ajax_wporg_ajax_change', 'css_optimise_generate_stylesheet_callback');
+add_action('wp_ajax_wporg_ajax_change', 'css_optimise_generate_stylesheet_callback'); //handle generation/processing of stylesheet
 require_once('utils/admin/register-meta-box.php');
