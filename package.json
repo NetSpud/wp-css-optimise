@@ -4,8 +4,8 @@
   "description": "This plugin is designed to optimise the CSS of a WordPress site. It does this by:",
   "main": "index.js",
   "scripts": {
-    "start": "wp-scripts start utils/admin/ui/index.js",
-    "build": "wp-scripts build utils/admin/ui/index.js"
+    "start": "wp-scripts start utils/admin/ui/block/index.js",
+    "build": "wp-scripts build utils/admin/ui/block/index.js"
   },
   "keywords": [],
   "author": "",

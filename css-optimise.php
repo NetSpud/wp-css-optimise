@@ -21,4 +21,4 @@ require_once('utils/generate-stylesheet.php');
 
 
 add_action('wp_ajax_wporg_ajax_change', 'css_optimise_generate_stylesheet_callback'); //handle generation/processing of stylesheet
-require_once('utils/admin/register-meta-box.php');
+require_once('utils/admin/ui/register-meta-box.php');

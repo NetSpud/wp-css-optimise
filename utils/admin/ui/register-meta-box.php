@@ -7,10 +7,10 @@ add_action('current_screen', function ($current_screen) {
     ) {
         // Do something specific for the Block Editor.
         error_log('Block Editor is being used.');
-        require_once('ui/latest.php');
+        require_once('block/block.php');
     } else {
         // Do something specific for the Classic Editor.
-        require_once('ui/classic_editor.php');
+        require_once('classic_editor/classic_editor.php');
         error_log('Classic Editor is being used.');
     }
 });
