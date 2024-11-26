@@ -6,7 +6,7 @@ function add_db_table()
     $table_name = $wpdb->prefix . 'css_optimise';
     $charset_collate = $wpdb->get_charset_collate();
     $sql = "CREATE TABLE $table_name (
-	`hash` varchar(64) DEFAULT NULL,
+	`hash` varchar(64) NOT NULL,
 	`filename` VARCHAR(40) DEFAULT NULL,
 	`usage_qty` INT(1) DEFAULT '1',
 	PRIMARY KEY (`hash`)
